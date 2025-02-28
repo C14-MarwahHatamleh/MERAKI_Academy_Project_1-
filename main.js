@@ -1,6 +1,7 @@
 // const header = document.querySelector("#header");
 const main = document.querySelector("#main");
 const mainTwo = document.querySelector("#mainTwo");
+const body = document.querySelector("body");
 
 // const questions = [
 //     categories = [
@@ -82,29 +83,74 @@ const Quiz = {
 
     </main> */
 
-const c = () => {
-  const h1 = document.createAttribute("h1");
+
+const timer= ()=>{
+    let date = new Date();
+    let sec = date.getSeconds();
+    let min = date.getMinutes();
+
+}
+//console.log(window.setInterval(timer, 1000));
+
+const quiz= () =>{
+
+}
+
+
+
+
+
+
+
+
+const categories = () => {
+  body.innerText = "";
+  const mainTwo = document.createElement("main");
+  mainTwo.id = "mainTwo";
+  const h1 = document.createElement("h1");
   h1.classList = "heading";
   h1.innerText = "Choose Your Category";
-//   const p = document.createAttribute("p");
-//   p.classList = "subHeading";
-//   p.innerText =
-//     "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo";
-//   const div = document.createAttribute("div");
-//   div.classList = "categories";
-//   const buttonOne = document.createAttribute("button");
-//   buttonOne.id = `categoryOne`;
-//   const buttonTwo = document.createAttribute("button");
-//   buttonTwo.id = `categoryTwo`;
-//   const buttonThree = document.createAttribute("button");
-//   buttonThree.id = `categoryThree`;
-   //mainTwo.append(h1, p, div);
-   mainTwo.append(h1);
-
- // div.append(buttonOne, buttonTwo, buttonThree);
+  const p = document.createElement("p");
+  p.classList = "subHeading";
+  p.innerText =
+    "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo";
+  const div = document.createElement("div");
+  div.classList = "categories";
+  const buttonOne = document.createElement("button");
+  buttonOne.id = `categoryOne`;
+  const buttonTwo = document.createElement("button");
+  buttonTwo.id = `categoryTwo`;
+  const buttonThree = document.createElement("button");
+  buttonThree.id = `categoryThree`;
+  const img1 = document.createElement("img");
+  const img2 = document.createElement("img");
+  const img3 = document.createElement("img");
+  img1.src = "math.png";
+  img2.src = "code-icon.jpg";
+  img3.src = "science.png";
+  img1.alt = "";
+  img2.alt = "";
+  img3.alt = "";
+  const ButtonOne_h3 = document.createElement("h3");
+  const ButtonTwo_h3 = document.createElement("h3");
+  const ButtonThree_h3 = document.createElement("h3");
+  ButtonOne_h3.innerText = "Math Category";
+  ButtonTwo_h3.innerText = "Code Category";
+  ButtonThree_h3.innerText = "Science Category";
+  body.append(mainTwo);
+  mainTwo.append(h1, p, div);
+  div.append(buttonOne, buttonTwo, buttonThree);
+  buttonOne.append(img1, ButtonOne_h3);
+  buttonTwo.append(img2, ButtonTwo_h3);
+  buttonThree.append(img3, ButtonThree_h3);
+  buttonTwo.addEventListener("click" , (event) => {
+    console.log("Helloo")
+  })
 };
-c()
+
 const welcomePage = () => {
+  const main = document.createElement("main");
+  main.id = "main";
   const div = document.createElement("div");
   div.classList = "welcomePageContent";
   const h3 = document.createElement("h3");
@@ -123,11 +169,12 @@ const welcomePage = () => {
   const img = document.createElement("img");
   img.src = Quiz.imgSrc;
   img.alt = "PlaceHolder image";
+  body.append(main);
   main.append(div, div2);
   div.append(h3, p, startQuiz);
   div2.append(img);
   startQuiz.addEventListener("click", (event) => {
-    // main.innerText = "";
+    categories();
     // const h1 = document.createAttribute("h1");
     // h1.classList = "heading";
     // h1.innerText = "Choose Your Category";
@@ -147,9 +194,8 @@ const welcomePage = () => {
     // main.append(h1 , p , div)
   });
 };
-
-{
-  /* 
+//welcomePage();
+/* 
     <main id="mainTwo">
         <h1 class="heading">Choose Your Category</h1>
         <p class="subHeading">Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet
@@ -170,4 +216,3 @@ const welcomePage = () => {
         </div>
 
 */
-}
