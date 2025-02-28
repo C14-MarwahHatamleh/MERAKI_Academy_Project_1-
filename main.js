@@ -43,27 +43,38 @@ const Quiz = {
   questions: [
     {
       id: 1,
-      q: "test",
-      answers: ["a", "b", "c", "d"],
-      correctAnswer: "a" /*add more key/value if need*/,
+      q: "Inside which HTML element do we put the JavaScript?",
+      answers: ["<javascript>", " <scripting>", "<script>", "<js>"],
+      correctAnswer: "<script>" /*add more key/value if need*/,
     },
     {
       id: 2,
-      q: "test 2",
-      answers: ["a", "b", "c", "d"],
-      correctAnswer: "c" /*add more key/value if need*/,
+      q: 'What is the correct JavaScript syntax to change the content of the HTML element below? \n \n <p id="demo">This is a demonstration.</p>',
+      answers: [
+        ' document.getElement("p").innerHTML = "Hello World!";',
+        'document.getElementById("demo").innerHTML = "Hello World!";',
+        ' #demo.innerHTML = "Hello World!";',
+        ' document.getElement("p").innerHTML = "Hello World!";',
+      ],
+      correctAnswer:
+        'document.getElementById("demo").innerHTML = "Hello World!";' /*add more key/value if need*/,
     },
     {
       id: 3,
-      q: " test 3",
-      answers: ["a", "b", "c", "d"],
-      correctAnswer: "d" /*add more key/value if need*/,
+      q: "How do you create a function in JavaScript?",
+      answers: [
+        "function:myFunction()",
+        "function myFunction()",
+        "function = myFunction()",
+        "public myFunction() ",
+      ],
+      correctAnswer: "function myFunction()" /*add more key/value if need*/,
     },
     {
       id: 4,
-      q: "test 4",
-      answers: ["a", "b", "c", "d"],
-      correctAnswer: "b" /*add more key/value if need*/,
+      q: "Which CSS that will be used for change text color",
+      answers: ["color", "background-color", "text-color", "textColor"],
+      correctAnswer: "color" /*add more key/value if need*/,
     },
   ],
 };
@@ -83,25 +94,84 @@ const Quiz = {
 
     </main> */
 
+// const timer= ()=>{
+//     let date = new Date();
+//     let sec = date.getSeconds();
+//     let min = date.getMinutes();
 
-const timer= ()=>{
-    let date = new Date();
-    let sec = date.getSeconds();
-    let min = date.getMinutes();
-
-}
+// }
 //console.log(window.setInterval(timer, 1000));
 
-const quiz= () =>{
+const quiz = () => {
+  body.innerText = "";
+  const mainThree = document.createElement("main");
+  mainThree.id = "mainThree";
+  const h3 = document.createElement("h3");
+  h3.innerText = "Code Quiz";
+  // const h5 = document.createElement("h5");
+  // h5.classList = "timer";
+  // h5.innerText = "Timer";
+  body.append(mainThree);
+  mainThree.append(h3);
+  Quiz["questions"].forEach(function (element, index) {
+    //console.log(element.q)
+    const p = document.createElement("p");
+    p.classList = "question";
+    p.innerText = element.q;
+    mainThree.append(p)
+    const div = document.createElement("div");
+    div.classList = "questions";
+    const div2 = document.createElement("div");
+    const input = document.createElement("input");
+    input.type = "radio";
+    input.id = element.id;
+    input.name = "radio";
+    input.value = element.q;
+    const label = document.createElement("label");
+    label.for = element.q;
+    label.innerText = element.q;
+   
+    mainThree.append(div);
+    div.append(div2);
+    div2.append(input , label);
+  });
+  // Quiz.forEach(element , index=> {
+  //     console.log(element.questions[index])
+  //
+  // });
+};
 
+{
+  /* <main id="mainThree">
+    <h3>Code Quiz</h3>
+<p class ="question">Lorem ipsum dolor sit amet consectetur adipisicing elit. At veniam sunt autem, suscipit cum dolore, nesciunt error, omnis reiciendis delectus neque magni. Architecto quidem reprehenderit consequatur! Ducimus quisquam qui nobis.</p>
+<h5 class = "timer">Timer</h5>
+<div class ="questions">  
+    <div >
+      <input type="radio" id="q1" name="radio" value="a" />
+      <label for="a">Inside which HTML element do we put the JavaScript?</label>
+    </div>
+  
+    <div>
+      <input type="radio" id="q2" name="radio" value="b" />
+      <label for="b">What is the correct JavaScript syntax to change</label>
+    </div>
+  
+    <div>
+      <input type="radio" id="q3" name="radio" value="c" />
+      <label for="c">How do you create a function in JavaScript?</label>
+    </div>
+    
+    <div>
+        <input type="radio" id="q4" name="radio" value="d" />
+        <label for="d">Which CSS that will be used for change text color</label>
+      </div>
+    </div>
+  
+
+
+   </main> */
 }
-
-
-
-
-
-
-
 
 const categories = () => {
   body.innerText = "";
@@ -143,9 +213,9 @@ const categories = () => {
   buttonOne.append(img1, ButtonOne_h3);
   buttonTwo.append(img2, ButtonTwo_h3);
   buttonThree.append(img3, ButtonThree_h3);
-  buttonTwo.addEventListener("click" , (event) => {
-    console.log("Helloo")
-  })
+  buttonTwo.addEventListener("click", (event) => {
+    quiz();
+  });
 };
 
 const welcomePage = () => {
@@ -194,7 +264,7 @@ const welcomePage = () => {
     // main.append(h1 , p , div)
   });
 };
-//welcomePage();
+welcomePage();
 /* 
     <main id="mainTwo">
         <h1 class="heading">Choose Your Category</h1>

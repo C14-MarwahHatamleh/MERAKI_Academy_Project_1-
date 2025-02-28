@@ -98,7 +98,36 @@ button h3{
     margin: 20px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+    justify-content: flex-start;
     height: 100vh;
     gap: 20px;
 }
+
+.questions{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 15px;
+  
+}
+
+.timer{
+margin-top: -25px;
+}
+
+#mainThree h3{
+    font-size: 30px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.questions input{
+    gap: 25px;
+    display: inline-block;   
+    cursor: pointer; 
+   background-color: beige;
+}
+
+
+/* grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr; */
