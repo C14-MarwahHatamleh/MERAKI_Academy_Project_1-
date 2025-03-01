@@ -34,7 +34,9 @@ const body = document.querySelector("body");
 
 // [{}]
 // ]
-
+let index = 0;
+let grade = 0;
+let status = "";
 const Quiz = {
   header: "Welcome Take Quiz",
   QuizParagraph:
@@ -79,52 +81,42 @@ const Quiz = {
   ],
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const ScorePage =()=>{
-    body.innerText = "";
-    const mainFour = document.createElement("main");
-    mainFour.id = "mainFour";
-    const div = document.createElement("div");
-    div.classList = "scorePage";
-    const h3 = document.createElement("h3");
-    h3.classList="finishHeader";
-    h3.innerText = "You Finished the Quiz"
-    const p = document.createElement("p");
-    p.classList="finishParagraph";
-    p.innerText = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo";
-    const div2 = document.createElement("div");
-    div2.classList = "score";
-    const headerThree = document.createElement("h3");
-    headerThree.classList="finishHeader";
-    headerThree.innerText = `Your Score is :`
-    const spanOne = document.createElement("span");
-    spanOne.classList = "grade";
-    spanOne.innerText=`9`
-    const spanTwo = document.createElement("span");
-    spanTwo.classList = "status";
-    spanTwo.innerText= `You Are Passed`
-    body.append(mainFour);
-    mainFour.append(div);
-    div.append(h3, p , div2);
-    div2.append(headerThree)
-    headerThree.append(spanOne , spanTwo)
-}
+const ScorePage = () => {
+  body.innerText = "";
+  const mainFour = document.createElement("main");
+  mainFour.id = "mainFour";
+  const div = document.createElement("div");
+  div.classList = "scorePage";
+  const h3 = document.createElement("h3");
+  h3.classList = "finishHeader";
+  h3.innerText = "You Finished the Quiz";
+  const p = document.createElement("p");
+  p.classList = "finishParagraph";
+  p.innerText =
+    "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo";
+  const div2 = document.createElement("div");
+  div2.classList = "score";
+  const headerThree = document.createElement("h3");
+  headerThree.classList = "finishHeader";
+  headerThree.innerText = `Your Score is : `;
+  const spanOne = document.createElement("span");
+  spanOne.classList = "grade";
+  spanOne.innerText = `${grade} out of 10`;
+  const spanTwo = document.createElement("span");
+  spanTwo.classList = "status";
+  if(grade === 4){
+    status = "Passed";
+  }
+  else {
+    status = "Failed";
+  }
+  spanTwo.innerText = ` You Are ${status}`;
+  body.append(mainFour);
+  mainFour.append(div);
+  div.append(h3, p, div2);
+  div2.append(headerThree);
+  headerThree.append(spanOne, spanTwo);
+};
 
 /* <main class="mainFour">
 <div class="scorePage">
@@ -141,11 +133,6 @@ const ScorePage =()=>{
 <div class="imgScorePage">placeHolder</div>
 
 </main> */
-
-
-
-
-
 
 /*   <main id="main">
 
@@ -170,8 +157,7 @@ const ScorePage =()=>{
 
 // }
 //console.log(window.setInterval(timer, 1000));
-let index = 0;
-let grade = 0;
+
 const quiz = () => {
   body.innerText = "";
   const mainThree = document.createElement("main");
@@ -191,53 +177,51 @@ const quiz = () => {
   // mainThree.append(p)
 
   // Quiz["questions"][index]["q"]
-  if(index === Quiz["questions"].length){ //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  if (index === Quiz["questions"].length) {
+    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     ScorePage();
-    console.log(index)
-    console.log(Quiz["questions"].length)
-    console.log("finish")
-}
-else {
-  const p = document.createElement("p");
-  p.classList = "question";
-  p.innerText = `Question ${Quiz["questions"][index]["id"]} :- ${Quiz["questions"][index]["q"]}`;
-  mainThree.append(p);
-  const div = document.createElement("div");
-  div.classList = "questions";
-  mainThree.append(div);
-  for (let i = 0; i < Quiz["questions"][index]["answers"].length; i++) {
-    const div2 = document.createElement("div");
-    const input = document.createElement("input");
-    input.type = "radio";
-    input.id = Quiz["questions"][index]["id"];
-    input.name = "radio";
-    input.value = Quiz["questions"][1]["answers"][i];
-    const label = document.createElement("label");
-    label.for = Quiz["questions"][1]["answers"][i];
-    label.innerText = Quiz["questions"][1]["answers"][i];
-   
-    div.append(div2);
-    div2.append(input, label);
+    console.log(index);
+    console.log(Quiz["questions"].length);
+    console.log("finish");
+  } else {
+    const p = document.createElement("p");
+    p.classList = "question";
+    p.innerText = `Question ${Quiz["questions"][index]["id"]} :- ${Quiz["questions"][index]["q"]}`;
+    mainThree.append(p);
+    const div = document.createElement("div");
+    div.classList = "questions";
+    mainThree.append(div);
+    for (let i = 0; i < Quiz["questions"][index]["answers"].length; i++) {
+      const div2 = document.createElement("div");
+      const input = document.createElement("input");
+      input.type = "radio";
+      input.id = i + 1;
+      input.name = "radio";
+      input.value = Quiz["questions"][index]["answers"][i];
+      const label = document.createElement("label");
+      label.for = Quiz["questions"][index]["answers"][i];
+      label.innerText = Quiz["questions"][index]["answers"][i];
+      div.append(div2);
+      div2.append(input, label);
+      input.addEventListener("click", (event) => {
+        if (event.target.value === Quiz["questions"][index]["correctAnswer"]) {
+          ++grade;
+        }
+      });
     }
-    var ele = document.querySelectorAll('.questions input');
-    console.log(ele)
-            for (i = 0; i < ele.length; i++) {
-                if (ele[i].checked)
-                    console.log(ele[i].innerText)
-            }
+
+    const buttonNext = document.createElement("button");
+    buttonNext.type = "button";
+    buttonNext.classList = "next";
+    buttonNext.innerText = "Next";
+    mainThree.append(buttonNext);
+
+    console.log();
+    buttonNext.addEventListener("click", (event) => {
+      index++;
+      quiz();
+    });
   }
-  const buttonNext = document.createElement("button");
-  buttonNext.type = "button";
-  buttonNext.classList = "next";
-  buttonNext.innerText = "Next";
-  mainThree.append(buttonNext);
-  
-console.log()
-  buttonNext.addEventListener("click" , (event)=>{
-    index++;
-    quiz();
-   
-  })
 };
 
 const categories = () => {
