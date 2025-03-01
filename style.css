@@ -128,6 +128,13 @@ margin-top: -25px;
    background-color: beige;
 }
 
+#mainThree button{
+    margin-top: 30px;
+    height: 40px;
+    width: 250px;
+    font-size: 16px;
+}
+
 
 /* grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr; */

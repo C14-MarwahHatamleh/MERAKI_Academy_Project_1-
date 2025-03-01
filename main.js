@@ -101,7 +101,7 @@ const Quiz = {
 
 // }
 //console.log(window.setInterval(timer, 1000));
-
+let index = 0;
 const quiz = () => {
   body.innerText = "";
   const mainThree = document.createElement("main");
@@ -113,65 +113,47 @@ const quiz = () => {
   // h5.innerText = "Timer";
   body.append(mainThree);
   mainThree.append(h3);
-  Quiz["questions"].forEach(function (element, index) {
-    //console.log(element.q)
-    const p = document.createElement("p");
-    p.classList = "question";
-    p.innerText = element.q;
-    mainThree.append(p)
+
+  //console.log(Quiz["questions"][index][keys])
+  // const p = document.createElement("p");
+  // p.classList = "question";
+  // p.innerText = Quiz["questions"][index]["q"];
+  // mainThree.append(p)
+
+  // Quiz["questions"][index]["q"]
+
+  const p = document.createElement("p");
+  p.classList = "question";
+  p.innerText = `Question ${Quiz["questions"][index]["id"]} :- ${Quiz["questions"][index]["q"]}`;
+  mainThree.append(p);
+
+  for (let i = 0; i < Quiz["questions"][1]["answers"].length; i++) {
     const div = document.createElement("div");
     div.classList = "questions";
     const div2 = document.createElement("div");
     const input = document.createElement("input");
     input.type = "radio";
-    input.id = element.id;
+    input.id = Quiz["questions"][index]["id"];
     input.name = "radio";
-    input.value = element.q;
+    input.value = Quiz["questions"][1]["answers"][i];
     const label = document.createElement("label");
-    label.for = element.q;
-    label.innerText = element.q;
-   
+    label.for = Quiz["questions"][1]["answers"][i];
+    label.innerText = Quiz["questions"][1]["answers"][i];
     mainThree.append(div);
     div.append(div2);
-    div2.append(input , label);
-  });
-  // Quiz.forEach(element , index=> {
-  //     console.log(element.questions[index])
-  //
-  // });
+    div2.append(input, label);
+  }
+  const buttonNext = document.createElement("button");
+  buttonNext.type = "button";
+  buttonNext.classList = "next";
+  buttonNext.innerText = "Next";
+  mainThree.append(buttonNext);
+
+  buttonNext.addEventListener("click" , (event)=>{
+    index++;
+    quiz();
+  })
 };
-
-{
-  /* <main id="mainThree">
-    <h3>Code Quiz</h3>
-<p class ="question">Lorem ipsum dolor sit amet consectetur adipisicing elit. At veniam sunt autem, suscipit cum dolore, nesciunt error, omnis reiciendis delectus neque magni. Architecto quidem reprehenderit consequatur! Ducimus quisquam qui nobis.</p>
-<h5 class = "timer">Timer</h5>
-<div class ="questions">  
-    <div >
-      <input type="radio" id="q1" name="radio" value="a" />
-      <label for="a">Inside which HTML element do we put the JavaScript?</label>
-    </div>
-  
-    <div>
-      <input type="radio" id="q2" name="radio" value="b" />
-      <label for="b">What is the correct JavaScript syntax to change</label>
-    </div>
-  
-    <div>
-      <input type="radio" id="q3" name="radio" value="c" />
-      <label for="c">How do you create a function in JavaScript?</label>
-    </div>
-    
-    <div>
-        <input type="radio" id="q4" name="radio" value="d" />
-        <label for="d">Which CSS that will be used for change text color</label>
-      </div>
-    </div>
-  
-
-
-   </main> */
-}
 
 const categories = () => {
   body.innerText = "";
