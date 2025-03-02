@@ -68,13 +68,13 @@ const Q = {
             id: 9,
             q: "How many sides does a dodecahedron have?",
             answers: ["12", "15", "13", "10"],
-            correctAnswer: "12" ,
+            correctAnswer: "12",
           },
           {
             id: 10,
             q: "What is the sum of 3 x 3 x 3?",
             answers: ["27", "30", "36", "30"],
-            correctAnswer: "27" ,
+            correctAnswer: "27",
           },
         ],
       },
@@ -109,8 +109,7 @@ const Q = {
               "function = myFunction()",
               "public myFunction() ",
             ],
-            correctAnswer:
-              "function myFunction()",
+            correctAnswer: "function myFunction()",
           },
           {
             id: 4,
@@ -164,13 +163,13 @@ const Q = {
             id: 1,
             q: "About how much of the human body is made up of water?",
             answers: ["60%", "40%", "20%", "30%"],
-            correctAnswer: "a" ,
+            correctAnswer: "a",
           },
           {
             id: 2,
             q: "What is the largest organ in the human body?",
             answers: ["Eyes", "Skin", "Ears", "Nose"],
-            correctAnswer: "Skin" ,
+            correctAnswer: "Skin",
           },
           {
             id: 3,
@@ -188,37 +187,42 @@ const Q = {
             id: 5,
             q: "How many chambers are there in the human heart? ",
             answers: ["Four", "Five", "Three", "Two"],
-            correctAnswer: "Four" ,
+            correctAnswer: "Four",
           },
           {
             id: 6,
             q: "Approximately long has Earth existed?",
-            answers: ["4.3 billion years", "4.5 billion years", "4.1 billion years", "4.0 billion years"],
-            correctAnswer: "4.5 billion years" ,
+            answers: [
+              "4.3 billion years",
+              "4.5 billion years",
+              "4.1 billion years",
+              "4.0 billion years",
+            ],
+            correctAnswer: "4.5 billion years",
           },
           {
             id: 7,
             q: "How many bones are in the human body?",
             answers: ["201", "205", "206", "208"],
-            correctAnswer: "206" ,
+            correctAnswer: "206",
           },
           {
             id: 8,
             q: "What is the freezing temperature of water?",
             answers: ["20°F", "32°C", "30°F", "32°F"],
-            correctAnswer: "32°F" ,
+            correctAnswer: "32°F",
           },
           {
             id: 9,
             q: "How many sides does a heptagon have?",
             answers: ["2", "6", "9", "7"],
-            correctAnswer: "7" ,
+            correctAnswer: "7",
           },
           {
             id: 10,
             q: "When is Pi Day celebrated each year?",
             answers: ["March 16th", "March 14th", "March 20th", "March 15th"],
-            correctAnswer: "March 14th" ,
+            correctAnswer: "March 14th",
           },
         ],
       },
@@ -293,7 +297,7 @@ const ScorePage = () => {
   spanOne.innerText = `${grade} out of 10`;
   const spanTwo = document.createElement("span");
   spanTwo.classList = "status";
-  if (grade >=  5) {
+  if (grade >= 5) {
     status = "Passed";
   } else {
     status = "Failed";
@@ -355,8 +359,21 @@ const quiz = () => {
   // const h5 = document.createElement("h5");
   // h5.classList = "timer";
   // h5.innerText = "Timer";
+
   body.append(mainThree);
   mainThree.append(h3);
+
+  const para = document.createElement("p");
+  para.classList = "HintForTimer";
+  mainThree.append(para);
+  const funcTimerHint = () => {
+    para.innerHTML = "";
+    setTimeout(function () {
+      para.innerHTML = `Please Try to answer before the time is over as it will move to next question automatically.`;
+      para.style.fontWeight = "bold";
+    }, 1000);
+  };
+  funcTimerHint();
 
   //console.log(Quiz["questions"][index][keys])
   // const p = document.createElement("p");
@@ -371,15 +388,41 @@ const quiz = () => {
   ) {
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     ScorePage();
-    console.log(index);
-    console.log(
-      Q["categories"][indexCategory][nameOfCategory]["questions"].length
-    );
-    console.log("finish");
+    // console.log(index);
+    // console.log(
+    //   Q["categories"][indexCategory][nameOfCategory]["questions"].length
+    // );
+    // console.log("finish");
   } else {
     const p = document.createElement("p");
     p.classList = "question";
-    p.innerText = `Question ${Q["categories"][indexCategory][nameOfCategory]["questions"][index]["id"]} :- ${Q["categories"][indexCategory][nameOfCategory]["questions"][index]["q"]}`;
+    p.innerText = `Question ${Q["categories"][indexCategory][nameOfCategory]["questions"][index]["id"]} : ${Q["categories"][indexCategory][nameOfCategory]["questions"][index]["q"]}`;
+    const br = document.createElement("br");
+    p.append(br);
+    const span = document.createElement("span");
+    span.classList = "Timer";
+    const funcTimer = () => {
+      let time = 5;
+      a = setInterval(() => {
+        time--;
+        span.innerText = `The Timer is : ${time}`;
+        if (time === 0) {
+          span.style.display = "block";
+          span.style.color = "red";
+          span.style.fontSize = "16px";
+          span.innerText = "The Time is finished";
+          clearInterval(a);
+          setTimeout(function () {
+            document.querySelector(".next").click();
+          }, 2000);
+        }
+      }, 1000);
+
+      return a;
+    };
+    funcTimer();
+    //h5.innerText = `${funcTimer()}`;
+    p.append(span);
     mainThree.append(p);
     const div = document.createElement("div");
     div.classList = "questions";
@@ -387,7 +430,10 @@ const quiz = () => {
     //Q["categories"][0]["maths"]["questions"][0]["answers"]
     for (
       let i = 0;
-      i < Q["categories"][indexCategory][nameOfCategory]["questions"][index]['answers'].length;
+      i <
+      Q["categories"][indexCategory][nameOfCategory]["questions"][index][
+        "answers"
+      ].length;
       i++
     ) {
       const div2 = document.createElement("div");
@@ -435,6 +481,7 @@ const quiz = () => {
     }
     mainThree.append(buttonNext);
     buttonNext.addEventListener("click", (event) => {
+      // /Math.floor(Math.random() *  (10 - 1 + 1)) + 1
       index++;
       quiz();
     });
