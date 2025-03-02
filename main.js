@@ -2,41 +2,230 @@
 const main = document.querySelector("#main");
 const mainTwo = document.querySelector("#mainTwo");
 const body = document.querySelector("body");
-
-// const questions = [
-//     categories = [
-//         Maths = [{
-//         id: 1,
-//         q: "test",
-//         answers: ["a" , "b" , "c" , "d"],
-//         correctAnswer: "a" /*add more key/value if need*/,
-//       },
-//       {
-//         id: 2,
-//         q: "test 2",
-//         answers: ["a" , "b" , "c" , "d"],
-//         correctAnswer: "c" /*add more key/value if need*/,
-//       },
-//       {
-//         id: 3,
-//         q: " test 3",
-//         answers: ["a" , "b" , "c" , "d"],
-//         correctAnswer: "d" /*add more key/value if need*/,
-//       },
-//       {
-//         id: 4,
-//         q: "test 4",
-//         answers: ["a" , "b" , "c" , "d"],
-//         correctAnswer: "b" /*add more key/value if need*/,
-//       },
-//     ] ,
-// ],
-
-// [{}]
-// ]
 let index = 0;
+let indexCategory;
+let nameOfCategory;
 let grade = 0;
 let status = "";
+const Q = {
+  header: "Welcome Take Quiz",
+  QuizParagraph:
+    "dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.",
+  imgSrc: "Portrait-of-a-cat-with-whiskers-visible.webp",
+  categories: [
+    {
+      maths: {
+        questions: [
+          {
+            id: 1,
+            q: "What symbol is used to symbolise percentage?",
+            answers: ["#", "%", "!", "$"],
+            correctAnswer: "%",
+          },
+          {
+            id: 2,
+            q: "What is the subtract of 18 – 9?",
+            answers: ["9", "8", "6", "7"],
+            correctAnswer: "9",
+          },
+          {
+            id: 3,
+            q: " How many sides does a pentagon have?",
+            answers: ["5", "4", "6", "3"],
+            correctAnswer: "5",
+          },
+          {
+            id: 4,
+            q: "What is the sum of 7 x 7?",
+            answers: ["48", "49", "36", "81"],
+            correctAnswer: "48",
+          },
+          {
+            id: 5,
+            q: "If the time is 12pm, how many hours is it until 6pm",
+            answers: ["12", "5", "6", "8"],
+            correctAnswer: "6",
+          },
+          {
+            id: 6,
+            q: "How many metres are in a kilometre?",
+            answers: ["1000", "100", "10000", "10"],
+            correctAnswer: "1000",
+          },
+          {
+            id: 7,
+            q: "3,6,9,12,__? What is the next number in the sequence?",
+            answers: ["16", "15", "14", "18"],
+            correctAnswer: "15",
+          },
+          {
+            id: 8,
+            q: "What is the sum of 13 x 14?",
+            answers: ["182", "190", "160", "176"],
+            correctAnswer: "182",
+          },
+          {
+            id: 9,
+            q: "How many sides does a dodecahedron have?",
+            answers: ["12", "15", "13", "10"],
+            correctAnswer: "12" ,
+          },
+          {
+            id: 10,
+            q: "What is the sum of 3 x 3 x 3?",
+            answers: ["27", "30", "36", "30"],
+            correctAnswer: "27" ,
+          },
+        ],
+      },
+    },
+    {
+      codes: {
+        questions: [
+          {
+            id: 1,
+            q: "Inside which HTML element do we put the JavaScript?",
+            answers: ["<javascript>", " <scripting>", "<script>", "<js>"],
+            correctAnswer: "<script>",
+          },
+          {
+            id: 2,
+            q: 'What is the correct JavaScript syntax to change the content of the HTML element below? \n \n <p id="demo">This is a demonstration.</p>?',
+            answers: [
+              ' document.getElement("p").innerHTML = "Hello World!";',
+              'document.getElementById("demo").innerHTML = "Hello World!";',
+              ' #demo.innerHTML = "Hello World!";',
+              ' document.getElement("p").innerHTML = "Hello World!";',
+            ],
+            correctAnswer:
+              'document.getElementById("demo").innerHTML = "Hello World!";',
+          },
+          {
+            id: 3,
+            q: "How do you create a function in JavaScript?",
+            answers: [
+              "function:myFunction()",
+              "function myFunction()",
+              "function = myFunction()",
+              "public myFunction() ",
+            ],
+            correctAnswer:
+              "function myFunction()",
+          },
+          {
+            id: 4,
+            q: "Which CSS that will be used to change text color?",
+            answers: ["color", "background-color", "text-color", "textColor"],
+            correctAnswer: "color",
+          },
+          {
+            id: 5,
+            q: "Which CSS that will be used to change font size?",
+            answers: ["font-size", "font", "font-family", "font-weight"],
+            correctAnswer: "font-size",
+          },
+          {
+            id: 6,
+            q: "Which Tag that will be used to break line (new Line)?",
+            answers: ["<br>", "<hr>", "<breakLine>", "<brline>"],
+            correctAnswer: "<br>",
+          },
+          {
+            id: 7,
+            q: "Which Tag that will be used to link CSS with HTML",
+            answers: ["<head>", "<body>", "<style>", "<html>"],
+            correctAnswer: "<head>",
+          },
+          {
+            id: 8,
+            q: "Which CSS that will be used to change the font",
+            answers: ["font-size", "font", "font-family", "font-weight"],
+            correctAnswer: "font-family",
+          },
+          {
+            id: 9,
+            q: "Which CSS that will be used to change backGround of the text",
+            answers: ["color", "background-color", "text-color", "textColor"],
+            correctAnswer: "background-color",
+          },
+          {
+            id: 10,
+            q: "Which CSS that will be used to create space around elements",
+            answers: ["margin", "padding", "space", "whiteSpace"],
+            correctAnswer: "margin",
+          },
+        ],
+      },
+    },
+    {
+      sciences: {
+        questions: [
+          {
+            id: 1,
+            q: "About how much of the human body is made up of water?",
+            answers: ["60%", "40%", "20%", "30%"],
+            correctAnswer: "a" ,
+          },
+          {
+            id: 2,
+            q: "What is the largest organ in the human body?",
+            answers: ["Eyes", "Skin", "Ears", "Nose"],
+            correctAnswer: "Skin" ,
+          },
+          {
+            id: 3,
+            q: " How long does it take for sunlight to reach Earth?",
+            answers: ["3 minutes", "5 minutes", "8 minutes", "9 minutes"],
+            correctAnswer: "8 minutes",
+          },
+          {
+            id: 4,
+            q: "What percentage of the water on Earth is saltwater?",
+            answers: ["95 percent", "97 percent", "90 percent", "92 percent"],
+            correctAnswer: "97 percent",
+          },
+          {
+            id: 5,
+            q: "How many chambers are there in the human heart? ",
+            answers: ["Four", "Five", "Three", "Two"],
+            correctAnswer: "Four" ,
+          },
+          {
+            id: 6,
+            q: "Approximately long has Earth existed?",
+            answers: ["4.3 billion years", "4.5 billion years", "4.1 billion years", "4.0 billion years"],
+            correctAnswer: "4.5 billion years" ,
+          },
+          {
+            id: 7,
+            q: "How many bones are in the human body?",
+            answers: ["201", "205", "206", "208"],
+            correctAnswer: "206" ,
+          },
+          {
+            id: 8,
+            q: "What is the freezing temperature of water?",
+            answers: ["20°F", "32°C", "30°F", "32°F"],
+            correctAnswer: "32°F" ,
+          },
+          {
+            id: 9,
+            q: "How many sides does a heptagon have?",
+            answers: ["2", "6", "9", "7"],
+            correctAnswer: "7" ,
+          },
+          {
+            id: 10,
+            q: "When is Pi Day celebrated each year?",
+            answers: ["March 16th", "March 14th", "March 20th", "March 15th"],
+            correctAnswer: "March 14th" ,
+          },
+        ],
+      },
+    },
+  ],
+};
+
 const Quiz = {
   header: "Welcome Take Quiz",
   QuizParagraph:
@@ -104,10 +293,9 @@ const ScorePage = () => {
   spanOne.innerText = `${grade} out of 10`;
   const spanTwo = document.createElement("span");
   spanTwo.classList = "status";
-  if(grade === 4){
+  if (grade >=  5) {
     status = "Passed";
-  }
-  else {
+  } else {
     status = "Failed";
   }
   spanTwo.innerText = ` You Are ${status}`;
@@ -163,6 +351,100 @@ const quiz = () => {
   const mainThree = document.createElement("main");
   mainThree.id = "mainThree";
   const h3 = document.createElement("h3");
+  h3.innerText = `${nameOfCategory} Quiz`;
+  // const h5 = document.createElement("h5");
+  // h5.classList = "timer";
+  // h5.innerText = "Timer";
+  body.append(mainThree);
+  mainThree.append(h3);
+
+  //console.log(Quiz["questions"][index][keys])
+  // const p = document.createElement("p");
+  // p.classList = "question";
+  // p.innerText = Quiz["questions"][index]["q"];
+  // mainThree.append(p)
+
+  // Quiz["questions"][index]["q"]
+
+  if (
+    index === Q["categories"][indexCategory][nameOfCategory]["questions"].length
+  ) {
+    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    ScorePage();
+    console.log(index);
+    console.log(
+      Q["categories"][indexCategory][nameOfCategory]["questions"].length
+    );
+    console.log("finish");
+  } else {
+    const p = document.createElement("p");
+    p.classList = "question";
+    p.innerText = `Question ${Q["categories"][indexCategory][nameOfCategory]["questions"][index]["id"]} :- ${Q["categories"][indexCategory][nameOfCategory]["questions"][index]["q"]}`;
+    mainThree.append(p);
+    const div = document.createElement("div");
+    div.classList = "questions";
+    mainThree.append(div);
+    //Q["categories"][0]["maths"]["questions"][0]["answers"]
+    for (
+      let i = 0;
+      i < Q["categories"][indexCategory][nameOfCategory]["questions"][index]['answers'].length;
+      i++
+    ) {
+      const div2 = document.createElement("div");
+      const input = document.createElement("input");
+      input.type = "radio";
+      input.id = i + 1;
+      input.name = "radio";
+      input.value =
+        Q["categories"][indexCategory][nameOfCategory]["questions"][index][
+          "answers"
+        ][i];
+      const label = document.createElement("label");
+      label.for =
+        Q["categories"][indexCategory][nameOfCategory]["questions"][index][
+          "answers"
+        ][i];
+      label.innerText =
+        Q["categories"][indexCategory][nameOfCategory]["questions"][index][
+          "answers"
+        ][i];
+      div.append(div2);
+      div2.append(input, label);
+      input.addEventListener("click", (event) => {
+        if (
+          event.target.value ===
+          Q["categories"][indexCategory][nameOfCategory]["questions"][index][
+            "correctAnswer"
+          ]
+        ) {
+          ++grade;
+        }
+      });
+    }
+
+    const buttonNext = document.createElement("button");
+    buttonNext.type = "button";
+    buttonNext.classList = "next";
+    if (
+      index ===
+      Q["categories"][indexCategory][nameOfCategory]["questions"].length - 1
+    ) {
+      buttonNext.innerText = "Finish";
+    } else {
+      buttonNext.innerText = "Next";
+    }
+    mainThree.append(buttonNext);
+    buttonNext.addEventListener("click", (event) => {
+      index++;
+      quiz();
+    });
+  }
+};
+const quiz2 = () => {
+  body.innerText = "";
+  const mainThree = document.createElement("main");
+  mainThree.id = "mainThree";
+  const h3 = document.createElement("h3");
   h3.innerText = "Code Quiz";
   // const h5 = document.createElement("h5");
   // h5.classList = "timer";
@@ -177,6 +459,7 @@ const quiz = () => {
   // mainThree.append(p)
 
   // Quiz["questions"][index]["q"]
+
   if (index === Quiz["questions"].length) {
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     ScorePage();
@@ -213,13 +496,28 @@ const quiz = () => {
     const buttonNext = document.createElement("button");
     buttonNext.type = "button";
     buttonNext.classList = "next";
-    buttonNext.innerText = "Next";
+    if (index === Quiz["questions"].length - 1) {
+      buttonNext.innerText = "Finish";
+    } else {
+      buttonNext.innerText = "Next";
+    }
     mainThree.append(buttonNext);
-
-    console.log();
     buttonNext.addEventListener("click", (event) => {
       index++;
       quiz();
+      // let ele = document.querySelectorAll("input");
+      // console.log
+      // ele.forEach(function(element , index){
+      //     if(element.checked){
+
+      //         index++;
+      //         quiz();
+      //     }
+
+      // else {
+      //     console.log("req")
+      // }
+      // })
     });
   }
 };
@@ -264,7 +562,19 @@ const categories = () => {
   buttonOne.append(img1, ButtonOne_h3);
   buttonTwo.append(img2, ButtonTwo_h3);
   buttonThree.append(img3, ButtonThree_h3);
+  buttonOne.addEventListener("click", (event) => {
+    indexCategory = 0;
+    nameOfCategory = "maths";
+    quiz();
+  });
   buttonTwo.addEventListener("click", (event) => {
+    nameOfCategory = "codes";
+    indexCategory = 1;
+    quiz();
+  });
+  buttonThree.addEventListener("click", (event) => {
+    nameOfCategory = "sciences";
+    indexCategory = 2;
     quiz();
   });
 };
