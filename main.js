@@ -278,6 +278,15 @@ const ScorePage = () => {
   body.innerText = "";
   const mainFour = document.createElement("main");
   mainFour.id = "mainFour";
+  const audioPassed = document.createElement("audio");
+  audioPassed.allow="autoplay" 
+  audioPassed.src="yay.mp3";
+  mainFour.append(audioPassed);
+  const audioFail = document.createElement("audio");
+  audioFail.allow="autoplay" 
+  audioFail.src="Fail.wav";
+  mainFour.append(audioPassed);
+  mainFour.append(audioFail);
   const div = document.createElement("div");
   div.classList = "scorePage";
   const h3 = document.createElement("h3");
@@ -298,8 +307,10 @@ const ScorePage = () => {
   const spanTwo = document.createElement("span");
   spanTwo.classList = "status";
   if (grade >= 5) {
+    audioPassed.play();
     status = "Passed";
   } else {
+    audioFail.play();
     status = "Failed";
   }
   spanTwo.innerText = ` You Are ${status}`;
@@ -362,7 +373,10 @@ const quiz = () => {
 
   body.append(mainThree);
   mainThree.append(h3);
-
+  const audio = document.createElement("audio");
+  audio.allow="autoplay" 
+  audio.src="clickinput.wav";
+  mainThree.append(audio);
   const para = document.createElement("p");
   para.classList = "HintForTimer";
   mainThree.append(para);
@@ -371,7 +385,7 @@ const quiz = () => {
     setTimeout(function () {
       para.innerHTML = `Please Try to answer before the time is over as it will move to next question automatically.`;
       para.style.fontWeight = "bold";
-    }, 1000);
+    }, 0);
   };
   funcTimerHint();
 
@@ -396,14 +410,17 @@ const quiz = () => {
   } else {
     const p = document.createElement("p");
     p.classList = "question";
-    p.innerText = `Question ${Q["categories"][indexCategory][nameOfCategory]["questions"][index]["id"]} : ${Q["categories"][indexCategory][nameOfCategory]["questions"][index]["q"]}`;
+    p.innerText = `Question ${Q["categories"][indexCategory][nameOfCategory]["questions"][index]["id"]} :  ${Q["categories"][indexCategory][nameOfCategory]["questions"][index]["q"]}`;
     const br = document.createElement("br");
     p.append(br);
     const span = document.createElement("span");
     span.classList = "Timer";
+  
     const funcTimer = () => {
-      let time = 5;
+      let time = 120;    
+      //  / let date = new Date(time * 1000);
       a = setInterval(() => {
+        time =
         time--;
         span.innerText = `The Timer is : ${time}`;
         if (time === 0) {
@@ -411,12 +428,13 @@ const quiz = () => {
           span.style.color = "red";
           span.style.fontSize = "16px";
           span.innerText = "The Time is finished";
+          document.querySelector(".next").disabled = false;
           clearInterval(a);
           setTimeout(function () {
             document.querySelector(".next").click();
-          }, 2000);
+          }, 0);
         }
-      }, 1000);
+      },1000);
 
       return a;
     };
@@ -457,6 +475,7 @@ const quiz = () => {
       div.append(div2);
       div2.append(input, label);
       input.addEventListener("click", (event) => {
+        audio.play()
         if (
           event.target.value ===
           Q["categories"][indexCategory][nameOfCategory]["questions"][index][
@@ -471,15 +490,24 @@ const quiz = () => {
     const buttonNext = document.createElement("button");
     buttonNext.type = "button";
     buttonNext.classList = "next";
+    buttonNext.disabled = true;
+    
     if (
       index ===
       Q["categories"][indexCategory][nameOfCategory]["questions"].length - 1
     ) {
+
       buttonNext.innerText = "Finish";
     } else {
       buttonNext.innerText = "Next";
     }
     mainThree.append(buttonNext);
+    document.querySelector(".questions").addEventListener("click", (event) => {
+      if (event.target && event.target.matches("input")) {
+        
+        buttonNext.disabled = false;
+      }
+    });
     buttonNext.addEventListener("click", (event) => {
       // /Math.floor(Math.random() *  (10 - 1 + 1)) + 1
       index++;
@@ -487,6 +515,8 @@ const quiz = () => {
     });
   }
 };
+
+
 const quiz2 = () => {
   body.innerText = "";
   const mainThree = document.createElement("main");
@@ -625,7 +655,11 @@ const categories = () => {
     quiz();
   });
 };
-
+{/* <audio controls autoplay muted>
+  <source src="horse.ogg" type="audio/ogg">
+  <source src="horse.mp3" type="audio/mpeg">
+Your browser does not support the audio element.
+</audio> */}
 const welcomePage = () => {
   const main = document.createElement("main");
   main.id = "main";
@@ -651,7 +685,28 @@ const welcomePage = () => {
   main.append(div, div2);
   div.append(h3, p, startQuiz);
   div2.append(img);
+  const audio = document.createElement("audio");
+  audio.allow="autoplay" 
+  audio.src="intro.wav";
+  main.append(audio);
+  img.addEventListener("click" , (event) => {
+    audio.play();
+  });
+  
+// const source  = document.createElement("source")
+// source.src="intro.wav";
+// source.type = "audio/wav";
+
+//body.append(audio)
+//audio.append(source)
+
+//<embed name="myMusic" loop="true" hidden="true" src="Music.mp3"></embed>
+// audio.addEventListener("click" , (event) => {
+//   audio.play()
+// })
+
   startQuiz.addEventListener("click", (event) => {
+    
     categories();
     // const h1 = document.createAttribute("h1");
     // h1.classList = "heading";
