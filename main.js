@@ -279,12 +279,12 @@ const ScorePage = () => {
   const mainFour = document.createElement("main");
   mainFour.id = "mainFour";
   const audioPassed = document.createElement("audio");
-  audioPassed.allow="autoplay" 
-  audioPassed.src="yay.mp3";
+  audioPassed.allow = "autoplay";
+  audioPassed.src = "yay.mp3";
   mainFour.append(audioPassed);
   const audioFail = document.createElement("audio");
-  audioFail.allow="autoplay" 
-  audioFail.src="Fail.wav";
+  audioFail.allow = "autoplay";
+  audioFail.src = "Fail.wav";
   mainFour.append(audioPassed);
   mainFour.append(audioFail);
   const div = document.createElement("div");
@@ -374,8 +374,8 @@ const quiz = () => {
   body.append(mainThree);
   mainThree.append(h3);
   const audio = document.createElement("audio");
-  audio.allow="autoplay" 
-  audio.src="clickinput.wav";
+  audio.allow = "autoplay";
+  audio.src = "clickinput.wav";
   mainThree.append(audio);
   const para = document.createElement("p");
   para.classList = "HintForTimer";
@@ -415,12 +415,11 @@ const quiz = () => {
     p.append(br);
     const span = document.createElement("span");
     span.classList = "Timer";
-  
+
     const funcTimer = () => {
-      let time = 120;    
+      let time = 120;
       //  / let date = new Date(time * 1000);
       a = setInterval(() => {
-        time =
         time--;
         span.innerText = `The Timer is : ${time}`;
         if (time === 0) {
@@ -434,7 +433,7 @@ const quiz = () => {
             document.querySelector(".next").click();
           }, 0);
         }
-      },1000);
+      }, 1000);
 
       return a;
     };
@@ -475,7 +474,7 @@ const quiz = () => {
       div.append(div2);
       div2.append(input, label);
       input.addEventListener("click", (event) => {
-        audio.play()
+        audio.play();
         if (
           event.target.value ===
           Q["categories"][indexCategory][nameOfCategory]["questions"][index][
@@ -491,12 +490,11 @@ const quiz = () => {
     buttonNext.type = "button";
     buttonNext.classList = "next";
     buttonNext.disabled = true;
-    
+
     if (
       index ===
       Q["categories"][indexCategory][nameOfCategory]["questions"].length - 1
     ) {
-
       buttonNext.innerText = "Finish";
     } else {
       buttonNext.innerText = "Next";
@@ -504,7 +502,6 @@ const quiz = () => {
     mainThree.append(buttonNext);
     document.querySelector(".questions").addEventListener("click", (event) => {
       if (event.target && event.target.matches("input")) {
-        
         buttonNext.disabled = false;
       }
     });
@@ -515,7 +512,6 @@ const quiz = () => {
     });
   }
 };
-
 
 const quiz2 = () => {
   body.innerText = "";
@@ -655,11 +651,13 @@ const categories = () => {
     quiz();
   });
 };
-{/* <audio controls autoplay muted>
+{
+  /* <audio controls autoplay muted>
   <source src="horse.ogg" type="audio/ogg">
   <source src="horse.mp3" type="audio/mpeg">
 Your browser does not support the audio element.
-</audio> */}
+</audio> */
+}
 const welcomePage = () => {
   const main = document.createElement("main");
   main.id = "main";
@@ -686,27 +684,26 @@ const welcomePage = () => {
   div.append(h3, p, startQuiz);
   div2.append(img);
   const audio = document.createElement("audio");
-  audio.allow="autoplay" 
-  audio.src="intro.wav";
+  audio.allow = "autoplay";
+  audio.src = "intro.wav";
   main.append(audio);
-  img.addEventListener("click" , (event) => {
+  img.addEventListener("click", (event) => {
     audio.play();
   });
-  
-// const source  = document.createElement("source")
-// source.src="intro.wav";
-// source.type = "audio/wav";
 
-//body.append(audio)
-//audio.append(source)
+  // const source  = document.createElement("source")
+  // source.src="intro.wav";
+  // source.type = "audio/wav";
 
-//<embed name="myMusic" loop="true" hidden="true" src="Music.mp3"></embed>
-// audio.addEventListener("click" , (event) => {
-//   audio.play()
-// })
+  //body.append(audio)
+  //audio.append(source)
+
+  //<embed name="myMusic" loop="true" hidden="true" src="Music.mp3"></embed>
+  // audio.addEventListener("click" , (event) => {
+  //   audio.play()
+  // })
 
   startQuiz.addEventListener("click", (event) => {
-    
     categories();
     // const h1 = document.createAttribute("h1");
     // h1.classList = "heading";
