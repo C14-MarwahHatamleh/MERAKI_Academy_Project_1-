@@ -1,4 +1,3 @@
-// const header = document.querySelector("#header");
 const main = document.querySelector("#main");
 const mainTwo = document.querySelector("#mainTwo");
 const body = document.querySelector("body");
@@ -7,6 +6,7 @@ let indexCategory;
 let nameOfCategory;
 let grade = 0;
 let status = "";
+let Answers = [];
 const Q = {
   header: "Welcome Take Quiz",
   QuizParagraph:
@@ -143,7 +143,7 @@ const Q = {
           },
           {
             id: 9,
-            q: "Which CSS that will be used to change backGround of the text",
+            q: "Which CSS that will be used to change back-ground of the text",
             answers: ["color", "background-color", "text-color", "textColor"],
             correctAnswer: "background-color",
           },
@@ -230,50 +230,6 @@ const Q = {
   ],
 };
 
-const Quiz = {
-  header: "Welcome Take Quiz",
-  QuizParagraph:
-    "dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.",
-  imgSrc: "Portrait-of-a-cat-with-whiskers-visible.webp",
-  questions: [
-    {
-      id: 1,
-      q: "Inside which HTML element do we put the JavaScript?",
-      answers: ["<javascript>", " <scripting>", "<script>", "<js>"],
-      correctAnswer: "<script>" /*add more key/value if need*/,
-    },
-    {
-      id: 2,
-      q: 'What is the correct JavaScript syntax to change the content of the HTML element below? \n \n <p id="demo">This is a demonstration.</p>',
-      answers: [
-        ' document.getElement("p").innerHTML = "Hello World!";',
-        'document.getElementById("demo").innerHTML = "Hello World!";',
-        ' #demo.innerHTML = "Hello World!";',
-        ' document.getElement("p").innerHTML = "Hello World!";',
-      ],
-      correctAnswer:
-        'document.getElementById("demo").innerHTML = "Hello World!";' /*add more key/value if need*/,
-    },
-    {
-      id: 3,
-      q: "How do you create a function in JavaScript?",
-      answers: [
-        "function:myFunction()",
-        "function myFunction()",
-        "function = myFunction()",
-        "public myFunction() ",
-      ],
-      correctAnswer: "function myFunction()" /*add more key/value if need*/,
-    },
-    {
-      id: 4,
-      q: "Which CSS that will be used for change text color",
-      answers: ["color", "background-color", "text-color", "textColor"],
-      correctAnswer: "color" /*add more key/value if need*/,
-    },
-  ],
-};
-
 const ScorePage = () => {
   body.innerText = "";
   const mainFour = document.createElement("main");
@@ -303,7 +259,7 @@ const ScorePage = () => {
   headerThree.innerText = `Your Score is : `;
   const spanOne = document.createElement("span");
   spanOne.classList = "grade";
-  spanOne.innerText = `${grade} out of 10`;
+  spanOne.innerText = `${grade} out of ${Q["categories"][indexCategory][nameOfCategory]["questions"].length}`;
   const spanTwo = document.createElement("span");
   spanTwo.classList = "status";
   if (grade >= 5) {
@@ -319,47 +275,8 @@ const ScorePage = () => {
   div.append(h3, p, div2);
   div2.append(headerThree);
   headerThree.append(spanOne, spanTwo);
+  localStorage.setItem("Grade", grade);
 };
-
-/* <main class="mainFour">
-<div class="scorePage">
-        <h3 class = "finishHeader">You Finished the Quiz</h3>
-        <p class = "finishParagraph">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam molestiae placeat porro, eius
-            temporibus omnis quos neque iusto cum sunt libero provident tempore sed obcaecati praesentium
-            reiciendis nam accusantium in.
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corporis sit voluptate blanditiis,
-            adipisci debitis necessitatibus dignissimos quaerat! Voluptas expedita, recusandae at dolor corrupti
-            sit non repellat porro, nam deleniti explicabo!
-        </p>
-    <div class="score"><h3>Your Score is : <span class ="grade">9 out of 10 </span><span class ="status">You Are Passed</span></h3></div>
-</div>
-<div class="imgScorePage">placeHolder</div>
-
-</main> */
-
-/*   <main id="main">
-
-
-        <div class="welcomePageContent">
-            <h3 class="quizHeader">Welcome Take the Quiz</h3>
-            <p class="quizParagraph">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam nesciunt reiciendis ipsum
-             Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, asperiores? Est maxime natus suscipit fuga magnam praesentium vero beatae
-            </p>
-            <button type="button" class="startQuizCTA">Start Quiz</button>
-        </div>
-        <div class="quizImg">
-            <img src="Portrait-of-a-cat-with-whiskers-visible.webp" alt="catPlaceHolder" />
-        </div>
-
-    </main> */
-
-// const timer= ()=>{
-//     let date = new Date();
-//     let sec = date.getSeconds();
-//     let min = date.getMinutes();
-
-// }
-//console.log(window.setInterval(timer, 1000));
 
 const quiz = () => {
   body.innerText = "";
@@ -367,10 +284,6 @@ const quiz = () => {
   mainThree.id = "mainThree";
   const h3 = document.createElement("h3");
   h3.innerText = `${nameOfCategory} Quiz`;
-  // const h5 = document.createElement("h5");
-  // h5.classList = "timer";
-  // h5.innerText = "Timer";
-
   body.append(mainThree);
   mainThree.append(h3);
   const audio = document.createElement("audio");
@@ -389,25 +302,16 @@ const quiz = () => {
   };
   funcTimerHint();
 
-  //console.log(Quiz["questions"][index][keys])
-  // const p = document.createElement("p");
-  // p.classList = "question";
-  // p.innerText = Quiz["questions"][index]["q"];
-  // mainThree.append(p)
-
-  // Quiz["questions"][index]["q"]
-
-  if (
-    index === Q["categories"][indexCategory][nameOfCategory]["questions"].length
-  ) {
+  if ((index === Q["categories"][indexCategory][nameOfCategory]["questions"].length) && (document.querySelector(".next") === null)) {
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     ScorePage();
-    // console.log(index);
-    // console.log(
-    //   Q["categories"][indexCategory][nameOfCategory]["questions"].length
-    // );
-    // console.log("finish");
+     console.log(index);
+    console.log(
+      Q["categories"][indexCategory][nameOfCategory]["questions"].length
+    );
+     console.log("finish");
   } else {
+      console.log("finish2");
     const p = document.createElement("p");
     p.classList = "question";
     p.innerText = `Question ${Q["categories"][indexCategory][nameOfCategory]["questions"][index]["id"]} :  ${Q["categories"][indexCategory][nameOfCategory]["questions"][index]["q"]}`;
@@ -419,7 +323,7 @@ const quiz = () => {
     const funcTimer = () => {
       let time = 120;
       //  / let date = new Date(time * 1000);
-      a = setInterval(() => {
+      t = setInterval(() => {
         time--;
         span.innerText = `The Timer is : ${time}`;
         if (time === 0) {
@@ -427,24 +331,23 @@ const quiz = () => {
           span.style.color = "red";
           span.style.fontSize = "16px";
           span.innerText = "The Time is finished";
-          document.querySelector(".next").disabled = false;
-          clearInterval(a);
+          if(document.querySelector(".next") !== null){
+          document.querySelector(".next").disabled = false;}
+          clearInterval(t);
           setTimeout(function () {
             document.querySelector(".next").click();
-          }, 0);
+          },);
         }
       }, 1000);
 
-      return a;
+      return t;
     };
     funcTimer();
-    //h5.innerText = `${funcTimer()}`;
     p.append(span);
     mainThree.append(p);
     const div = document.createElement("div");
     div.classList = "questions";
     mainThree.append(div);
-    //Q["categories"][0]["maths"]["questions"][0]["answers"]
     for (
       let i = 0;
       i <
@@ -475,12 +378,9 @@ const quiz = () => {
       div2.append(input, label);
       input.addEventListener("click", (event) => {
         audio.play();
-        if (
-          event.target.value ===
-          Q["categories"][indexCategory][nameOfCategory]["questions"][index][
-            "correctAnswer"
-          ]
-        ) {
+        Answers.push(event.target.value);
+        localStorage.setItem("Answers", Answers);
+        if ( event.target.value === Q["categories"][indexCategory][nameOfCategory]["questions"][index]["correctAnswer"]) {
           ++grade;
         }
       });
@@ -507,90 +407,8 @@ const quiz = () => {
     });
     buttonNext.addEventListener("click", (event) => {
       // /Math.floor(Math.random() *  (10 - 1 + 1)) + 1
-      index++;
+      ++index;
       quiz();
-    });
-  }
-};
-
-const quiz2 = () => {
-  body.innerText = "";
-  const mainThree = document.createElement("main");
-  mainThree.id = "mainThree";
-  const h3 = document.createElement("h3");
-  h3.innerText = "Code Quiz";
-  // const h5 = document.createElement("h5");
-  // h5.classList = "timer";
-  // h5.innerText = "Timer";
-  body.append(mainThree);
-  mainThree.append(h3);
-
-  //console.log(Quiz["questions"][index][keys])
-  // const p = document.createElement("p");
-  // p.classList = "question";
-  // p.innerText = Quiz["questions"][index]["q"];
-  // mainThree.append(p)
-
-  // Quiz["questions"][index]["q"]
-
-  if (index === Quiz["questions"].length) {
-    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    ScorePage();
-    console.log(index);
-    console.log(Quiz["questions"].length);
-    console.log("finish");
-  } else {
-    const p = document.createElement("p");
-    p.classList = "question";
-    p.innerText = `Question ${Quiz["questions"][index]["id"]} :- ${Quiz["questions"][index]["q"]}`;
-    mainThree.append(p);
-    const div = document.createElement("div");
-    div.classList = "questions";
-    mainThree.append(div);
-    for (let i = 0; i < Quiz["questions"][index]["answers"].length; i++) {
-      const div2 = document.createElement("div");
-      const input = document.createElement("input");
-      input.type = "radio";
-      input.id = i + 1;
-      input.name = "radio";
-      input.value = Quiz["questions"][index]["answers"][i];
-      const label = document.createElement("label");
-      label.for = Quiz["questions"][index]["answers"][i];
-      label.innerText = Quiz["questions"][index]["answers"][i];
-      div.append(div2);
-      div2.append(input, label);
-      input.addEventListener("click", (event) => {
-        if (event.target.value === Quiz["questions"][index]["correctAnswer"]) {
-          ++grade;
-        }
-      });
-    }
-
-    const buttonNext = document.createElement("button");
-    buttonNext.type = "button";
-    buttonNext.classList = "next";
-    if (index === Quiz["questions"].length - 1) {
-      buttonNext.innerText = "Finish";
-    } else {
-      buttonNext.innerText = "Next";
-    }
-    mainThree.append(buttonNext);
-    buttonNext.addEventListener("click", (event) => {
-      index++;
-      quiz();
-      // let ele = document.querySelectorAll("input");
-      // console.log
-      // ele.forEach(function(element , index){
-      //     if(element.checked){
-
-      //         index++;
-      //         quiz();
-      //     }
-
-      // else {
-      //     console.log("req")
-      // }
-      // })
     });
   }
 };
@@ -638,26 +456,26 @@ const categories = () => {
   buttonOne.addEventListener("click", (event) => {
     indexCategory = 0;
     nameOfCategory = "maths";
+    localStorage.setItem("CategoryIndex", indexCategory);
+    localStorage.setItem("CategoryName", nameOfCategory);
     quiz();
   });
   buttonTwo.addEventListener("click", (event) => {
     nameOfCategory = "codes";
     indexCategory = 1;
+    localStorage.setItem("CategoryIndex", indexCategory);
+    localStorage.setItem("CategoryName", nameOfCategory);
     quiz();
   });
   buttonThree.addEventListener("click", (event) => {
     nameOfCategory = "sciences";
     indexCategory = 2;
+    localStorage.setItem("CategoryIndex", indexCategory);
+    localStorage.setItem("CategoryName", nameOfCategory);
     quiz();
   });
 };
-{
-  /* <audio controls autoplay muted>
-  <source src="horse.ogg" type="audio/ogg">
-  <source src="horse.mp3" type="audio/mpeg">
-Your browser does not support the audio element.
-</audio> */
-}
+
 const welcomePage = () => {
   const main = document.createElement("main");
   main.id = "main";
@@ -665,84 +483,26 @@ const welcomePage = () => {
   div.classList = "welcomePageContent";
   const h3 = document.createElement("h3");
   h3.classList = "quizHeader";
-  h3.innerText = Quiz.header;
+  h3.innerText = Q.header;
   const p = document.createElement("p");
   p.classList = "quizParagraph";
-  p.innerText = Quiz.QuizParagraph;
+  p.innerText = Q.QuizParagraph;
   const startQuiz = document.createElement("button");
   startQuiz.classList = "startQuizCTA";
-  startQuiz.innerText = Quiz.QuizParagraph;
+  startQuiz.innerText = Q.QuizParagraph;
   startQuiz.type = "button";
   startQuiz.innerText = "Start Quiz";
   const div2 = document.createElement("div");
   div2.classList = "quizImg";
   const img = document.createElement("img");
-  img.src = Quiz.imgSrc;
+  img.src = Q.imgSrc;
   img.alt = "PlaceHolder image";
   body.append(main);
   main.append(div, div2);
   div.append(h3, p, startQuiz);
   div2.append(img);
-  const audio = document.createElement("audio");
-  audio.allow = "autoplay";
-  audio.src = "intro.wav";
-  main.append(audio);
-  img.addEventListener("click", (event) => {
-    audio.play();
-  });
-
-  // const source  = document.createElement("source")
-  // source.src="intro.wav";
-  // source.type = "audio/wav";
-
-  //body.append(audio)
-  //audio.append(source)
-
-  //<embed name="myMusic" loop="true" hidden="true" src="Music.mp3"></embed>
-  // audio.addEventListener("click" , (event) => {
-  //   audio.play()
-  // })
-
   startQuiz.addEventListener("click", (event) => {
     categories();
-    // const h1 = document.createAttribute("h1");
-    // h1.classList = "heading";
-    // h1.innerText = "Choose Your Category";
-    // const p = document.createAttribute("p");
-    // p.classList = "subHeading";
-    // p.innerText =
-    //   "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo";
-    // const div = document.createAttribute("div");
-    // div.classList = "categories";
-    // const buttonOne = document.createAttribute("button");
-    // buttonOne.id = `categoryOne`;
-    //   const buttonTwo = document.createAttribute("button");
-    //   buttonTwo.id = `categoryTwo`;
-    //   const buttonThree = document.createAttribute("button");
-    //   buttonThree.id = `categoryThree`;
-    //   div.append(buttonOne , buttonTwo , buttonThree)
-    // main.append(h1 , p , div)
   });
 };
 welcomePage();
-/* 
-    <main id="mainTwo">
-        <h1 class="heading">Choose Your Category</h1>
-        <p class="subHeading">Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem, ipsum dolor sit amet
-            consectetur adipisicing elit. Nemo quo, quisquam temporibus aspernatur vitae voluptates, maxime odio, iste
-            molestias alias dolore maiores sed ea? Voluptatibus perferendis nobis suscipit hic et!Tempora veniam, eaque
-            minima vitae culpa consequatur doloremque incidunt optio quas, minus repellat earum quibusdam excepturi
-            molestias dolore laboriosam, asperiores voluptatem impedit?</p>
-        <div class="categories">
-            <button id="categoryOne"><img src="math.png" />
-                <h3>Math Category</h3>
-            </button>
-            <button id="categoryTwo"><img src="code-icon.jpg" />
-                <h3>Code Category</h3>
-            </button>
-            <button id="categoryThree"><img src="science.png" />
-                <h3>Science Category</h3>
-            </button>
-        </div>
-
-*/
