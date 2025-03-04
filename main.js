@@ -281,7 +281,7 @@ const ScorePage = () => {
   re_playButton.innerText ="Re-play";
   div.append(re_playButton);
   re_playButton.addEventListener("click", (event) => {
-    categories();
+    welcomePage();
   })
   localStorage.setItem("Grade", grade);
 };
@@ -502,6 +502,7 @@ const categories = () => {
 };
 
 const welcomePage = () => {
+  body.innerText = "";
   const main = document.createElement("main");
   main.id = "main";
   const div = document.createElement("div");
