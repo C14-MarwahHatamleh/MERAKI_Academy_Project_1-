@@ -1,5 +1,3 @@
-const main = document.querySelector("#main");
-const mainTwo = document.querySelector("#mainTwo");
 const body = document.querySelector("body");
 let index = 0;
 let indexCategory;
@@ -320,7 +318,6 @@ const quiz = () => {
   ) {
     ScorePage();
   } else {
-    console.log("finish2");
     const p = document.createElement("p");
     p.classList = "question";
     p.innerText = `Question ${Q["categories"][indexCategory][nameOfCategory]["questions"][index]["id"]} :  ${Q["categories"][indexCategory][nameOfCategory]["questions"][index]["q"]}`;
