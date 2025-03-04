@@ -9,9 +9,9 @@ let status = "";
 let Answers = [];
 let my_end_width = 10;
 const Q = {
-  header: "Welcome Take Quiz",
+  header: "Welcome to our Quiz",
   QuizParagraph:
-    "Hello Friend! Welcome to a world of endless possibilities. Explore your Knowledge in our Quiz in the different categoreies. of products and services crafted to enrich your life.\n \n Prepare yourself and Take the Quiz for progress progress and improve your knowledge. We are here to assist you at every stage of your journey.",
+    "Hello Friend! Welcome to a world of endless possibilities. Explore your Knowledge in our Quiz in the different categoreies. of products and services crafted to enrich your life. Prepare yourself and Take the Quiz for progress progress and improve your knowledge. We are here to assist you at every stage of your journey.",
   imgSrc: "Portrait-of-a-cat-with-whiskers-visible.webp",
   categories: [
     {
@@ -132,25 +132,25 @@ const Q = {
           },
           {
             id: 7,
-            q: "Which Tag that will be used to link CSS with HTML",
+            q: "Which Tag that will be used to link CSS with HTML?",
             answers: ["<head>", "<body>", "<style>", "<html>"],
             correctAnswer: "<head>",
           },
           {
             id: 8,
-            q: "Which CSS that will be used to change the font",
+            q: "Which CSS that will be used to change the font?",
             answers: ["font-size", "font", "font-family", "font-weight"],
             correctAnswer: "font-family",
           },
           {
             id: 9,
-            q: "Which CSS that will be used to change back-ground of the text",
+            q: "Which CSS that will be used to change back-ground of the text?",
             answers: ["color", "background-color", "text-color", "textColor"],
             correctAnswer: "background-color",
           },
           {
             id: 10,
-            q: "Which CSS that will be used to create space around elements",
+            q: "Which CSS that will be used to create space around elements?",
             answers: ["margin", "padding", "space", "whiteSpace"],
             correctAnswer: "margin",
           },
@@ -277,6 +277,14 @@ const ScorePage = () => {
   div.append(h3, p, div2);
   div2.append(headerThree);
   headerThree.append(spanOne, spanTwo);
+  //<button class ="re-playButton" type="button">Re-play</button>
+  const re_playButton = document.createElement("button");
+  re_playButton.classList = "re-playButton";
+  re_playButton.innerText ="Re-play";
+  div.append(re_playButton);
+  re_playButton.addEventListener("click", (event) => {
+    categories();
+  })
   localStorage.setItem("Grade", grade);
 };
 
@@ -305,30 +313,12 @@ const quiz = () => {
   audio.src = "clickinput.wav";
   mainThree.append(audio);
 
-  // const para = document.createElement("p");
-  // para.classList = "HintForTimer";
-  // mainThree.append(para);
-  // const funcTimerHint = () => {
-  //   para.innerHTML = "";
-  //   setTimeout(function () {
-  //     para.innerHTML = `Please Try to answer before the time is over as it will move to next question automatically.`;
-  //     para.style.fontWeight = "bold";
-  //   }, 0);
-
-  //funcTimerHint();
-
   if (
     index ===
       Q["categories"][indexCategory][nameOfCategory]["questions"].length &&
-    document.querySelector(".next") === null
+    (document.querySelector(".next")) === null
   ) {
-    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     ScorePage();
-    console.log(index);
-    console.log(
-      Q["categories"][indexCategory][nameOfCategory]["questions"].length
-    );
-    console.log("finish");
   } else {
     console.log("finish2");
     const p = document.createElement("p");
@@ -338,7 +328,7 @@ const quiz = () => {
     const span = document.createElement("span");
     span.classList = "Timer";
     const funcTimer = () => {
-      let time =12;
+      let time =120;
       t = setInterval(() => {
         time--;
         span.innerText = `Timer : ${time}`;
@@ -348,38 +338,17 @@ const quiz = () => {
           span.innerText = "The Time is finished";
           if (document.querySelector(".next") !== null) {
             document.querySelector(".next").disabled = false;
+            clearInterval(t);
           }
           setTimeout(() => {
             document.querySelector(".next").click();
           }, 1000);
-          clearInterval(t);
+          
         }
       }, 1000);
     };
     funcTimer();
-    // const funcTimer = () => {
-    //   let time = 120;
-    //   //  / let date = new Date(time * 1000);
-    //   t = setInterval(() => {
-    //     time--;
-    //     span.innerText = `The Timer is : ${time}`;
-    //     if (time === 0) {
-    //       span.style.display = "block";
-    //       span.style.color = "red";
-    //       span.style.fontSize = "16px";
-    //       span.innerText = "The Time is finished";
-    //       if(document.querySelector(".next") !== null){
-    //       document.querySelector(".next").disabled = false;}
 
-    //       setTimeout(function () {
-    //         document.querySelector(".next").click();
-    //       },);
-    //     }
-    //   }, 1000);
-    //   clearInterval(t);
-    //   return t;
-    // };
-    // funcTimer();
     mainThree.append(p);
     p.append(span); 
 
@@ -478,7 +447,7 @@ const categories = () => {
   mainTwo.id = "mainTwo";
   const h1 = document.createElement("h1");
   h1.classList = "heading";
-  h1.innerText = "Choose Your Category";
+  h1.innerText = "Categories";
   const p = document.createElement("p");
   p.classList = "subHeading";
   p.innerText =
@@ -551,19 +520,16 @@ const welcomePage = () => {
   startQuiz.innerText = Q.QuizParagraph;
   startQuiz.type = "button";
   startQuiz.innerText = "Start Quiz";
-  const div2 = document.createElement("div");
-  div2.classList = "box";
   // <h2>HacktoberFest 2023</h2>
   const headerTwo = document.createElement("h2");
   headerTwo.innerText = "Hello Friend! Take Our Quiz";
   // img.src = Q.imgSrc;
   // img.alt = "PlaceHolder image";
   body.append(main);
-  main.append(div, div2);
+  main.append(div);
   div.append(h3, p, startQuiz);
-  div2.append(headerTwo);
   startQuiz.addEventListener("click", (event) => {
     categories();
   });
 };
-//welcomePage();
+welcomePage();
