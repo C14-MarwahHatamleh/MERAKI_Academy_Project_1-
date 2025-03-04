@@ -7,14 +7,15 @@ let nameOfCategory;
 let grade = 0;
 let status = "";
 let Answers = [];
+let my_end_width = 10;
 const Q = {
   header: "Welcome Take Quiz",
   QuizParagraph:
-    "dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.",
+    "Hello Friend! Welcome to a world of endless possibilities. Explore your Knowledge in our Quiz in the different categoreies. of products and services crafted to enrich your life.\n \n Prepare yourself and Take the Quiz for progress progress and improve your knowledge. We are here to assist you at every stage of your journey.",
   imgSrc: "Portrait-of-a-cat-with-whiskers-visible.webp",
   categories: [
     {
-      maths: {
+      Maths: {
         questions: [
           {
             id: 1,
@@ -80,7 +81,7 @@ const Q = {
       },
     },
     {
-      codes: {
+      Codes: {
         questions: [
           {
             id: 1,
@@ -90,12 +91,12 @@ const Q = {
           },
           {
             id: 2,
-            q: 'What is the correct JavaScript syntax to change the content of the HTML element below? \n \n <p id="demo">This is a demonstration.</p>?',
+            q: "What is the correct method that we used to get element by Id?",
             answers: [
-              ' document.getElement("p").innerHTML = "Hello World!";',
-              'document.getElementById("demo").innerHTML = "Hello World!";',
-              ' #demo.innerHTML = "Hello World!";',
-              ' document.getElement("p").innerHTML = "Hello World!";',
+              "getElement",
+              "getElementById",
+              "innerHTML",
+              "querySelector",
             ],
             correctAnswer:
               'document.getElementById("demo").innerHTML = "Hello World!";',
@@ -157,7 +158,7 @@ const Q = {
       },
     },
     {
-      sciences: {
+      Sciences: {
         questions: [
           {
             id: 1,
@@ -251,7 +252,7 @@ const ScorePage = () => {
   const p = document.createElement("p");
   p.classList = "finishParagraph";
   p.innerText =
-    "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo";
+    "Thank you for taking our Quiz! Together, we can create a better future. Explore, engage, and be a part of something meaningful. \n We are appreciated for choosing us as your learning companion. Unlock your potential with our comprehensive educational resources.";
   const div2 = document.createElement("div");
   div2.classList = "score";
   const headerThree = document.createElement("h3");
@@ -267,6 +268,7 @@ const ScorePage = () => {
     status = "Passed";
   } else {
     audioFail.play();
+    spanTwo.style.setProperty("--bg-color" , "red");
     status = "Failed";
   }
   spanTwo.innerText = ` You Are ${status}`;
@@ -286,68 +288,106 @@ const quiz = () => {
   h3.innerText = `${nameOfCategory} Quiz`;
   body.append(mainThree);
   mainThree.append(h3);
+  const spanOne = document.createElement("span");
+  spanOne.classList = "questionMark";
+  const spanTwo = document.createElement("span");
+  spanTwo.innerText = "?";
+  const spanThree = document.createElement("span");
+  spanThree.classList = "toolTip";
+  spanThree.style.display = "block";
+  spanThree.style.textAlign = "left";
+  h3.append(spanOne);
+  spanOne.append(spanTwo);
+  spanOne.append(spanThree);
+
   const audio = document.createElement("audio");
   audio.allow = "autoplay";
   audio.src = "clickinput.wav";
   mainThree.append(audio);
-  const para = document.createElement("p");
-  para.classList = "HintForTimer";
-  mainThree.append(para);
-  const funcTimerHint = () => {
-    para.innerHTML = "";
-    setTimeout(function () {
-      para.innerHTML = `Please Try to answer before the time is over as it will move to next question automatically.`;
-      para.style.fontWeight = "bold";
-    }, 0);
-  };
-  funcTimerHint();
 
-  if ((index === Q["categories"][indexCategory][nameOfCategory]["questions"].length) && (document.querySelector(".next") === null)) {
+  // const para = document.createElement("p");
+  // para.classList = "HintForTimer";
+  // mainThree.append(para);
+  // const funcTimerHint = () => {
+  //   para.innerHTML = "";
+  //   setTimeout(function () {
+  //     para.innerHTML = `Please Try to answer before the time is over as it will move to next question automatically.`;
+  //     para.style.fontWeight = "bold";
+  //   }, 0);
+
+  //funcTimerHint();
+
+  if (
+    index ===
+      Q["categories"][indexCategory][nameOfCategory]["questions"].length &&
+    document.querySelector(".next") === null
+  ) {
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     ScorePage();
-     console.log(index);
+    console.log(index);
     console.log(
       Q["categories"][indexCategory][nameOfCategory]["questions"].length
     );
-     console.log("finish");
+    console.log("finish");
   } else {
-      console.log("finish2");
+    console.log("finish2");
     const p = document.createElement("p");
     p.classList = "question";
     p.innerText = `Question ${Q["categories"][indexCategory][nameOfCategory]["questions"][index]["id"]} :  ${Q["categories"][indexCategory][nameOfCategory]["questions"][index]["q"]}`;
-    const br = document.createElement("br");
-    p.append(br);
+
     const span = document.createElement("span");
     span.classList = "Timer";
-
     const funcTimer = () => {
-      let time = 120;
-      //  / let date = new Date(time * 1000);
+      let time =12;
       t = setInterval(() => {
         time--;
-        span.innerText = `The Timer is : ${time}`;
+        span.innerText = `Timer : ${time}`;
         if (time === 0) {
-          span.style.display = "block";
           span.style.color = "red";
-          span.style.fontSize = "16px";
+          span.style.fontSize = "14px";
           span.innerText = "The Time is finished";
-          if(document.querySelector(".next") !== null){
-          document.querySelector(".next").disabled = false;}
-          clearInterval(t);
-          setTimeout(function () {
+          if (document.querySelector(".next") !== null) {
+            document.querySelector(".next").disabled = false;
+          }
+          setTimeout(() => {
             document.querySelector(".next").click();
-          },);
+          }, 1000);
+          clearInterval(t);
         }
       }, 1000);
-
-      return t;
     };
     funcTimer();
-    p.append(span);
+    // const funcTimer = () => {
+    //   let time = 120;
+    //   //  / let date = new Date(time * 1000);
+    //   t = setInterval(() => {
+    //     time--;
+    //     span.innerText = `The Timer is : ${time}`;
+    //     if (time === 0) {
+    //       span.style.display = "block";
+    //       span.style.color = "red";
+    //       span.style.fontSize = "16px";
+    //       span.innerText = "The Time is finished";
+    //       if(document.querySelector(".next") !== null){
+    //       document.querySelector(".next").disabled = false;}
+
+    //       setTimeout(function () {
+    //         document.querySelector(".next").click();
+    //       },);
+    //     }
+    //   }, 1000);
+    //   clearInterval(t);
+    //   return t;
+    // };
+    // funcTimer();
     mainThree.append(p);
-    const div = document.createElement("div");
-    div.classList = "questions";
-    mainThree.append(div);
+    p.append(span); 
+
+    const br = document.createElement("br");
+    p.append(br);
+    const form = document.createElement("form");
+    form.classList = "questions";
+    mainThree.append(form);
     for (
       let i = 0;
       i <
@@ -357,6 +397,7 @@ const quiz = () => {
       i++
     ) {
       const div2 = document.createElement("div");
+      div2.classList = "quizoption";
       const input = document.createElement("input");
       input.type = "radio";
       input.id = i + 1;
@@ -374,13 +415,18 @@ const quiz = () => {
         Q["categories"][indexCategory][nameOfCategory]["questions"][index][
           "answers"
         ][i];
-      div.append(div2);
+      form.append(div2);
       div2.append(input, label);
       input.addEventListener("click", (event) => {
         audio.play();
         Answers.push(event.target.value);
         localStorage.setItem("Answers", Answers);
-        if ( event.target.value === Q["categories"][indexCategory][nameOfCategory]["questions"][index]["correctAnswer"]) {
+        if (
+          event.target.value ===
+          Q["categories"][indexCategory][nameOfCategory]["questions"][index][
+            "correctAnswer"
+          ]
+        ) {
           ++grade;
         }
       });
@@ -397,9 +443,17 @@ const quiz = () => {
     ) {
       buttonNext.innerText = "Finish";
     } else {
-      buttonNext.innerText = "Next";
+      buttonNext.innerText = "Submit Answer";
     }
     mainThree.append(buttonNext);
+    const meter = document.createElement("div");
+    meter.classList = "meter";
+    mainThree.append(meter);
+    const spanOfProgressOne = document.createElement("span");
+    const spanOfProgressTwo = document.createElement("span");
+    spanOfProgressTwo.classList = "progress";
+    meter.append(spanOfProgressOne);
+    spanOfProgressOne.append(spanOfProgressTwo);
     document.querySelector(".questions").addEventListener("click", (event) => {
       if (event.target && event.target.matches("input")) {
         buttonNext.disabled = false;
@@ -408,6 +462,11 @@ const quiz = () => {
     buttonNext.addEventListener("click", (event) => {
       // /Math.floor(Math.random() *  (10 - 1 + 1)) + 1
       ++index;
+      my_end_width += 10;
+      document.documentElement.style.setProperty(
+        "--my-end-width",
+        `${my_end_width}%`
+      );
       quiz();
     });
   }
@@ -423,7 +482,7 @@ const categories = () => {
   const p = document.createElement("p");
   p.classList = "subHeading";
   p.innerText =
-    "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo";
+    "To Take the Quiz you need to choose any of the categories. Discover unique questions that test your knowledge.we have three quizzes each quiz has enrich information and questions to expand your information in the field that you need to take it.";
   const div = document.createElement("div");
   div.classList = "categories";
   const buttonOne = document.createElement("button");
@@ -435,12 +494,12 @@ const categories = () => {
   const img1 = document.createElement("img");
   const img2 = document.createElement("img");
   const img3 = document.createElement("img");
-  img1.src = "math.png";
-  img2.src = "code-icon.jpg";
-  img3.src = "science.png";
-  img1.alt = "";
-  img2.alt = "";
-  img3.alt = "";
+  img1.src = "calculator-fill.svg";
+  img2.src = "code-slash.svg";
+  img3.src = "book.svg";
+  img1.alt = "math image";
+  img2.alt = "code  image";
+  img3.alt = "Science image";
   const ButtonOne_h3 = document.createElement("h3");
   const ButtonTwo_h3 = document.createElement("h3");
   const ButtonThree_h3 = document.createElement("h3");
@@ -455,20 +514,20 @@ const categories = () => {
   buttonThree.append(img3, ButtonThree_h3);
   buttonOne.addEventListener("click", (event) => {
     indexCategory = 0;
-    nameOfCategory = "maths";
+    nameOfCategory = "Maths";
     localStorage.setItem("CategoryIndex", indexCategory);
     localStorage.setItem("CategoryName", nameOfCategory);
     quiz();
   });
   buttonTwo.addEventListener("click", (event) => {
-    nameOfCategory = "codes";
+    nameOfCategory = "Codes";
     indexCategory = 1;
     localStorage.setItem("CategoryIndex", indexCategory);
     localStorage.setItem("CategoryName", nameOfCategory);
     quiz();
   });
   buttonThree.addEventListener("click", (event) => {
-    nameOfCategory = "sciences";
+    nameOfCategory = "Sciences";
     indexCategory = 2;
     localStorage.setItem("CategoryIndex", indexCategory);
     localStorage.setItem("CategoryName", nameOfCategory);
@@ -493,16 +552,18 @@ const welcomePage = () => {
   startQuiz.type = "button";
   startQuiz.innerText = "Start Quiz";
   const div2 = document.createElement("div");
-  div2.classList = "quizImg";
-  const img = document.createElement("img");
-  img.src = Q.imgSrc;
-  img.alt = "PlaceHolder image";
+  div2.classList = "box";
+  // <h2>HacktoberFest 2023</h2>
+  const headerTwo = document.createElement("h2");
+  headerTwo.innerText = "Hello Friend! Take Our Quiz";
+  // img.src = Q.imgSrc;
+  // img.alt = "PlaceHolder image";
   body.append(main);
   main.append(div, div2);
   div.append(h3, p, startQuiz);
-  div2.append(img);
+  div2.append(headerTwo);
   startQuiz.addEventListener("click", (event) => {
     categories();
   });
 };
-welcomePage();
+//welcomePage();

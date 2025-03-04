@@ -1,35 +1,48 @@
+:root {
+    --my-start-width: 0;
+    --my-end-width: 10%;
+    --bg-color: green;
+  }
+
+
 *{
     padding :0;
     margin: 0;
 }
 
+body {
+    margin: 20px;
+}
+
 #main{
     display: flex;
     flex-direction: row;
+    height: 100vh;
     justify-content: space-between;
+
 }
 
 .welcomePageContent{
     margin-left: 20px;
-    height: 100vh;
-    width: 100vh;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
     gap :15px;
+    height: 100vh;
+    width: 100vh;
 }
 
 .quizHeader{
-    font-size: 30px;
+font-size: 30px;
 font-weight: bold;
 font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 /* text-shadow: 1px 1px 2px pink; */
 }
 
 .quizParagraph{
+    white-space: normal;
     font-family: Arial, Helvetica, sans-serif;
-
 }
 
 .startQuizCTA{
@@ -43,7 +56,21 @@ font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     width: 100vh;
   }
 
+.box::before{
+    position: absolute;
+    width: 150px;
+    height: 140%;
+    background: linear-gradient(rgb(0, 204, 255), rgb(212, 0, 212));
+    animation: 4s linear 0s infinite normal none running animate;
 
+}
+
+.box::after {
+    content: "";
+    position: absolute;
+    background: #ffffff;
+    border-radius: 16px;
+}
 
 #mainTwo{
     display: flex;
@@ -80,38 +107,88 @@ font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     align-items: center;
     height: 200px;
     width: 200px;
-    background-color: cornsilk;
+    background-color: #ffffff;
+    
 }
 button img{
-    border-radius: 50%;
-    height: 60px;
-    width: 60px;
+    height: 40px;
+    width: 40px;
 }
 
 button h3{
+    font-size: 20px;
         font-family: 'Courier New', Courier, monospace
 }
 
 #mainThree{
-    margin: 20px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    height: 100vh;
+    justify-content: space-between;
     gap: 20px;
 }
 
-.questions{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: 15px;
-  
+.questionMark{
+    position: absolute;
+    cursor: pointer;
+    padding: 0 10px;
+    display: inline-block;
+    background-color: #242c3a;
+    color: #ffffff;
+    max-width: 240px;
+    vertical-align: bottom;
+    margin: 12px;
 }
 
-.timer{
-margin-top: -25px;
+.questionMark .toolTip {
+    background-color: #242c3a;
+    color: #ffffff;
+    position: absolute;
+    z-index: 1;
+    visibility: hidden;
+}
+
+.questionMark:hover ::after{ 
+    font-size: 16px;
+    content: "Please Try to answer before the time is over as it will move to next question automatically."; }
+
+.question{
+    display: inline;
+    font-size: 18px;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.quizoption {
+    background-color: #242c3a;
+    font-family: 'Source Sans Pro Topnav', sans-serif;
+    padding: 8px 16px;
+    gap: 10px;
+    margin: auto;
+    margin-bottom: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    color : #ffffff;
+    text-align: left;
+}
+.quizoption label {
+    padding-left: 10px;
+}
+
+.quizoption:hover {
+    background-color: #232934;
+}
+
+.next{
+    margin-top: 30px;
+    height: 40px;
+    width: 200px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.Timer{
+    margin-left: 15px;
+    font-size: 14px;
+   display: inline;
 }
 
 #mainThree h3{
@@ -126,13 +203,6 @@ margin-top: -25px;
    background-color: beige;
 }
 
-#mainThree button{
-    margin-top: 30px;
-    height: 40px;
-    width: 250px;
-    font-size: 16px;
-}
-
 
 .mainFour{
     margin: 2px;
@@ -142,18 +212,49 @@ margin-top: -25px;
 }
 
 .scorePage{
+    border-radius: 15px;
+    position: relative;
+    background-color: #232934;
+    color: #ffffff;
     height: 100vh;
-    width: 100vh;
-    margin: 20px;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: first baseline;
-    align-items: flex-start;
-    gap :25px
+    justify-content: flex-start;
+    align-items: center    ;
+    border: 1px  transparent;
+
 }
 
-.score{
-    display: inline;
+.finishHeader{
+    margin-top:  20px;
+    display: block;
 }
-/* grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr; */
+
+.status{
+text-align: center;
+ background-color:var(--bg-color) ;
+  
+}
+
+.meter { 
+        height: 5px;
+        width: 360px;
+        position: relative;
+        background: #f3efe6;
+        overflow: hidden;
+        align-self: center;
+ }
+    
+.progress {
+        background-color: #7193cc;
+        animation: progressBar 1s linear;
+        animation-fill-mode:both; 
+       
+}
+    
+@keyframes progressBar {
+      0% { width: var(--my-start-width); }
+      100% { width: var(--my-end-width); }
+}
+    
