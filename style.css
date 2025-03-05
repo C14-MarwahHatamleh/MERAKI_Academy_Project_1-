@@ -19,6 +19,7 @@ body {
 
 .welcomePageContent{
     margin-top: 80px;
+    /* height: calc(100vh - 150px) ; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -133,6 +134,8 @@ button h3{
     flex-direction: column;
     justify-content: space-between;
     gap: 20px;
+    flex-wrap: wrap;
+    ;
 }
 
 .questionMark{
@@ -223,7 +226,7 @@ button h3{
 
 
 .scorePage{
-    height: 500px;
+    height: calc(100vh - 50px);
     border-radius: 15px;
     background-color: #232934;
     color: #ffffff;
@@ -232,11 +235,11 @@ button h3{
     justify-content: center;
     align-items: center    ;
     border: 1px  transparent;
-
 }
 
 .finishHeader{
     margin-top:  20px;
+    margin-bottom: 40px;
     display: block;
 }
 
@@ -282,11 +285,62 @@ text-align: center;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-@media (min-width: 300px) and (max-width: 800px) {
+@media (min-width: 320px) and (max-width: 480px) {
     .categories{
         flex-direction: column;
     }
+    #mainTwo{
+        width: 350px;  
+    }
+
     .subHeading , .quizParagraph{
         width: 400px;    
     }
+    .welcomePageContent{
+      width: 370px;
+      height: calc(100vh - 20px);
+    }
+    .finishParagraph{
+        padding-left: 20px;
+        font-size: 12px;
+        text-align: left;
+    }
+    .finishHeader{
+        font-size: 12px;
+    }
+    
+    .status{
+        font-size: 12px;
+      
+    }
+    .re-playButton{
+        height: 20px;
+    width: 100px;
+    font-size: 12px;
+    }
   }
+
+  @media (min-width: 481px) and (max-width: 768px) {
+    .welcomePageContent{
+        width: 510px;
+        height: calc(100vh - 20px);
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .categories{
+        flex-direction: column;
+    }
+
+    .subHeading{
+    width: 450px;
+    text-align: left;
+    }
+
+    .scorePage{
+        padding-left: 20px;
+    }
+}
+
+  
+

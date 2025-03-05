@@ -1,10 +1,12 @@
 const body = document.querySelector("body");
-let index = 0;
+let index;
 let indexCategory;
 let nameOfCategory;
 let grade = 0;
+let num = 1;
 let status = "";
 let Answers = [];
+let questionTracker = [];
 let my_end_width = 10;
 const Q = {
   header: "Welcome to our Quiz",
@@ -229,6 +231,30 @@ const Q = {
   ],
 };
 
+const generateRandomQuestion = (indexCategory, nameOfCategory) => {
+  const existingQuestions = () => {
+    for (let i = 0; i < questionTracker.length; i++) {
+      if (questionTracker[i] === index) {
+        return true;
+      }
+    }
+    return false;
+  };
+  for (
+    let i = 0;
+    i < Q["categories"][indexCategory][nameOfCategory]["questions"].length;
+    i++
+  ) {
+    do {
+      index = Math.floor(
+        Math.random() *
+          Q["categories"][indexCategory][nameOfCategory]["questions"].length
+      );
+    } while (existingQuestions());
+    questionTracker.push(index);
+  }
+};
+
 const ScorePage = () => {
   body.innerText = "";
   const mainFour = document.createElement("main");
@@ -266,7 +292,7 @@ const ScorePage = () => {
     status = "Passed";
   } else {
     audioFail.play();
-    spanTwo.style.setProperty("--bg-color" , "red");
+    spanTwo.style.setProperty("--bg-color", "red");
     status = "Failed";
   }
   spanTwo.innerText = ` You Are ${status}`;
@@ -278,11 +304,13 @@ const ScorePage = () => {
   //<button class ="re-playButton" type="button">Re-play</button>
   const re_playButton = document.createElement("button");
   re_playButton.classList = "re-playButton";
-  re_playButton.innerText ="Re-play";
+  re_playButton.innerText = "Re-play";
   div.append(re_playButton);
   re_playButton.addEventListener("click", (event) => {
+    body.innerText = "";
+    location.reload();
     welcomePage();
-  })
+  });
   localStorage.setItem("Grade", grade);
 };
 
@@ -312,42 +340,40 @@ const quiz = () => {
   mainThree.append(audio);
 
   if (
-    index ===
-      Q["categories"][indexCategory][nameOfCategory]["questions"].length &&
-    (document.querySelector(".next")) === null
+    questionTracker.length === 0 &&
+    document.querySelector(".next") === null
   ) {
+    console.log(questionTracker.length);
     ScorePage();
   } else {
+    console.log("f2");
     const p = document.createElement("p");
     p.classList = "question";
-    p.innerText = `Question ${Q["categories"][indexCategory][nameOfCategory]["questions"][index]["id"]} :  ${Q["categories"][indexCategory][nameOfCategory]["questions"][index]["q"]}`;
-
+    p.innerText = `Question ${num} :  ${Q["categories"][indexCategory][nameOfCategory]["questions"][index]["q"]}`;
+    ++num;
     const span = document.createElement("span");
     span.classList = "Timer";
     const funcTimer = () => {
-      let time =120;
+      let time = 120;
       t = setInterval(() => {
         time--;
         span.innerText = `Timer : ${time}`;
-        if (time === 0) {
+        if (time === 0 && document.querySelector(".next") !== null) {
           span.style.color = "red";
           span.style.fontSize = "14px";
           span.innerText = "The Time is finished";
-          if (document.querySelector(".next") !== null) {
-            document.querySelector(".next").disabled = false;
-            clearInterval(t);
-          }
+          document.querySelector(".next").disabled = false;
+          clearInterval(t);
           setTimeout(() => {
             document.querySelector(".next").click();
           }, 1000);
-          
         }
       }, 1000);
     };
     funcTimer();
 
     mainThree.append(p);
-    p.append(span); 
+    p.append(span);
 
     const br = document.createElement("br");
     p.append(br);
@@ -397,45 +423,44 @@ const quiz = () => {
         }
       });
     }
+  }
 
-    const buttonNext = document.createElement("button");
-    buttonNext.type = "button";
-    buttonNext.classList = "next";
-    buttonNext.disabled = true;
+  const buttonNext = document.createElement("button");
+  buttonNext.type = "button";
+  buttonNext.classList = "next";
+  buttonNext.disabled = true;
 
-    if (
-      index ===
-      Q["categories"][indexCategory][nameOfCategory]["questions"].length - 1
-    ) {
-      buttonNext.innerText = "Finish";
-    } else {
-      buttonNext.innerText = "Submit Answer";
-    }
-    mainThree.append(buttonNext);
-    const meter = document.createElement("div");
-    meter.classList = "meter";
-    mainThree.append(meter);
-    const spanOfProgressOne = document.createElement("span");
-    const spanOfProgressTwo = document.createElement("span");
-    spanOfProgressTwo.classList = "progress";
-    meter.append(spanOfProgressOne);
-    spanOfProgressOne.append(spanOfProgressTwo);
+  if (questionTracker.length === 1) {
+    buttonNext.innerText = "Finish";
+  } else {
+    buttonNext.innerText = "Submit Answer";
+  }
+  mainThree.append(buttonNext);
+  const meter = document.createElement("div");
+  meter.classList = "meter";
+  mainThree.append(meter);
+  const spanOfProgressOne = document.createElement("span");
+  const spanOfProgressTwo = document.createElement("span");
+  spanOfProgressTwo.classList = "progress";
+  meter.append(spanOfProgressOne);
+  spanOfProgressOne.append(spanOfProgressTwo);
+  if (document.querySelector(".questions") !== null) {
     document.querySelector(".questions").addEventListener("click", (event) => {
       if (event.target && event.target.matches("input")) {
         buttonNext.disabled = false;
       }
     });
-    buttonNext.addEventListener("click", (event) => {
-      // /Math.floor(Math.random() *  (10 - 1 + 1)) + 1
-      ++index;
-      my_end_width += 10;
-      document.documentElement.style.setProperty(
-        "--my-end-width",
-        `${my_end_width}%`
-      );
-      quiz();
-    });
   }
+  buttonNext.addEventListener("click", (event) => {
+    index = questionTracker[0];
+    questionTracker.shift();
+    my_end_width += 10;
+    document.documentElement.style.setProperty(
+      "--my-end-width",
+      `${my_end_width}%`
+    );
+    quiz();
+  });
 };
 
 const categories = () => {
@@ -483,6 +508,7 @@ const categories = () => {
     nameOfCategory = "Maths";
     localStorage.setItem("CategoryIndex", indexCategory);
     localStorage.setItem("CategoryName", nameOfCategory);
+    generateRandomQuestion(indexCategory, nameOfCategory);
     quiz();
   });
   buttonTwo.addEventListener("click", (event) => {
@@ -490,6 +516,8 @@ const categories = () => {
     indexCategory = 1;
     localStorage.setItem("CategoryIndex", indexCategory);
     localStorage.setItem("CategoryName", nameOfCategory);
+    generateRandomQuestion(indexCategory, nameOfCategory);
+
     quiz();
   });
   buttonThree.addEventListener("click", (event) => {
@@ -497,6 +525,7 @@ const categories = () => {
     indexCategory = 2;
     localStorage.setItem("CategoryIndex", indexCategory);
     localStorage.setItem("CategoryName", nameOfCategory);
+    generateRandomQuestion(indexCategory, nameOfCategory);
     quiz();
   });
 };
@@ -518,11 +547,8 @@ const welcomePage = () => {
   startQuiz.innerText = Q.QuizParagraph;
   startQuiz.type = "button";
   startQuiz.innerText = "Start Quiz";
-  // <h2>HacktoberFest 2023</h2>
   const headerTwo = document.createElement("h2");
   headerTwo.innerText = "Hello Friend! Take Our Quiz";
-  // img.src = Q.imgSrc;
-  // img.alt = "PlaceHolder image";
   body.append(main);
   main.append(div);
   div.append(h3, p, startQuiz);
